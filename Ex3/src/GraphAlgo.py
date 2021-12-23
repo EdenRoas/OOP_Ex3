@@ -17,12 +17,13 @@ class GraphAlgo(GraphAlgoInterface):
         return self.__graph
 
     def load_from_json(self, file_name: str) -> bool:
+
         pass
 
     def save_to_json(self, file_name: str) -> bool:
         pass
 
-    def Dijkstra(self, src):
+    def Dijkstra(self, src) -> (list[int], list[int]):
         # nodes_queue = PriorityQueue()
         nodes_set = self.__graph.get_all_v()
         dist = []
@@ -63,6 +64,23 @@ class GraphAlgo(GraphAlgoInterface):
             shortest_path.append(n)
         return shortest_path_dist[id2], shortest_path
 
+    def centerPoint(self) -> (int, float):
+        id_of_center = 0
+        min_max_dist = sys.maxsize
+        for node in self.__graph.get_all_v():
+            dist = self.Dijkstra(node)[0]
+            # min_max_dist = self._find_max_dist(dist)
+            if dist.max() < min_max_dist:
+                min_max_dist = dist.max()
+                id_of_center = node
+        return id_of_center, min_max_dist
+
+    # def _find_max_dist(self, dist):
+    #     max_dist =
+    #     for d in dist:
+    #
+    #     pass
+
     def TSP(self, node_lst: List[int]) -> (List[int], float):
         minPath = sys.maxsize
         min_list = List[int]
@@ -70,9 +88,6 @@ class GraphAlgo(GraphAlgoInterface):
             for n in node_lst:
                 pass
         return None
-
-    def centerPoint(self) -> (int, float):
-        pass
 
     def plot_graph(self) -> None:
         pass
