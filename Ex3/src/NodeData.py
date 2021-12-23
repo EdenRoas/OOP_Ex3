@@ -21,3 +21,6 @@ class NodeData:
 
     def remove_from_neighbors_list(self, neighbor) -> None:
         self._neighbors_list.remove(neighbor)
+
+    def get_neighbors_list(self):
+        return self._neighbors_list

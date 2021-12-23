@@ -1,5 +1,5 @@
-from GraphInterface import GraphInterface
-from NodeData import NodeData
+from src.GraphInterface import GraphInterface
+from src.NodeData import NodeData
 from src.Point3D import Point3D
 
 
