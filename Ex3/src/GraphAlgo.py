@@ -1,5 +1,6 @@
 import json
 import math
+import random
 import sys
 from typing import List
 from src.GraphAlgoInterface import GraphAlgoInterface
@@ -7,7 +8,9 @@ from src.DiGraph import DiGraph
 from src.GraphInterface import GraphInterface
 from Point3D import Point3D
 from queue import PriorityQueue
-from GUI import GraphGUI
+# from GraphGUI import GraphGUI
+# import matplotlib.pyplot as plt
+
 
 class GraphAlgo(GraphAlgoInterface):
 
@@ -166,7 +169,4 @@ class GraphAlgo(GraphAlgoInterface):
         return path, sum_weight
 
     def plot_graph(self) -> None:
-        graphdraw = GraphGUI(self)
-        graphdraw.draw_graph()
-
-
+        pass

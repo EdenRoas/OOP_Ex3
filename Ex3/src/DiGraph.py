@@ -22,9 +22,13 @@ class DiGraph(GraphInterface):
         return self._vertices_dict
 
     def all_in_edges_of_node(self, id1: int) -> dict:
+        if id1 not in self._dest_edge_dict.keys():
+            return {}
         return self._dest_edge_dict[id1]
 
     def all_out_edges_of_node(self, id1: int) -> dict:
+        if id1 not in self._src_edge_dict.keys():
+            return {}
         return self._src_edge_dict[id1]
 
     def get_mc(self) -> int:
@@ -67,14 +71,17 @@ class DiGraph(GraphInterface):
         if node_id not in self._vertices_dict.keys():
             return False
         del self._vertices_dict[node_id]
-        for e in self._dest_edge_dict[node_id]:
-            del self._src_edge_dict[e][node_id]
-        del self._dest_edge_dict[node_id]
-        for e in self._src_edge_dict[node_id]:
-            del self._dest_edge_dict[e][node_id]
-        del self._src_edge_dict[node_id]
-        for e in self._dest_edge_dict[node_id]:
-            e.remove_from_neighbors_list(node_id)
+        if node_id in self._dest_edge_dict.keys():
+            for e in self._dest_edge_dict[node_id]:
+                del self._src_edge_dict[e][node_id]
+                e.remove_from_neighbors_list(node_id)
+                self.edges_size -= 1
+            del self._dest_edge_dict[node_id]
+        if node_id in self._src_edge_dict.keys():
+            for e in self._src_edge_dict[node_id]:
+                del self._dest_edge_dict[e][node_id]
+                self.edges_size -= 1
+            del self._src_edge_dict[node_id]
         self._mc += 1
         return True
 
@@ -90,6 +97,7 @@ class DiGraph(GraphInterface):
         del self._src_edge_dict[node_id1][node_id2]
         del self._dest_edge_dict[node_id2][node_id1]
         self._vertices_dict.get(node_id1).remove_from_neighbors_list(node_id2)
+        self.edges_size -= 1
         self._mc += 1
         return True
 
