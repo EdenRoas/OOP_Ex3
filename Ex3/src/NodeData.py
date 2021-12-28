@@ -8,7 +8,7 @@ class NodeData:
     def __init__(self,  node_id: int, location: Point3D):
         self.__id = node_id
         self._location = Point3D(location.get_x(), location.get_y(), location.get_z())
-        self._neighbors_list = List[NodeData]
+        self._neighbors_list = []
 
     def get_ID(self) -> int:
         return self.__id
