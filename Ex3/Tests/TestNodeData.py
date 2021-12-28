@@ -30,3 +30,12 @@ class TestNodeData(TestCase):
         self.assertEqual(self.loc1.__dict__, self.n1.get_location().__dict__)
         self.assertEqual(self.loc2.__dict__, self.n2.get_location().__dict__)
         self.assertEqual(self.loc3.__dict__, self.n3.get_location().__dict__)
+
+    def test_update_neighbors_list(self):
+        self.fail()
+
+    def test_remove_from_neighbors_list(self):
+        self.fail()
+
+    def test_get_neighbors_list(self):
+        self.fail()

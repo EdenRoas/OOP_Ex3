@@ -47,9 +47,25 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def save_to_json(self, file_name: str) -> bool:
+        dictionary = {}
+        dictionary["Edges"] = []
+        for src in self.__graph.get_all_src_dict().keys():
+            for dest in self.__graph.get_all_src_dict()[src].keys():
+                ed_dict = {"src": src, "w": self.__graph.get_edge_weigth(src, dest), "dest": dest}
+                dictionary["Edges"].append(ed_dict)
+        dictionary["Nodes"] = []
+        for node in self.__graph.get_all_v().values():
+            pos = "{},{},{}".format(node.get_location().get_x(), node.get_location().get_y(),
+                                    node.get_location().get_z())
+            id_node = node.get_ID()
+            no_dict = {"pos": pos, "id": id_node}
+            dictionary["Nodes"].append(no_dict)
+
         try:
-            with open(file_name, 'w') as f:  # Open a file for writing
-                f.write(repr(self.__graph))
+            json_object = json.dumps(dictionary, indent=4)
+            with open(file_name, 'w') as outfile:  # Open a file for writing
+                # json.dump(dictionary, outfile)
+                outfile.write(json_object)
                 return True
         except Exception as e:
             print(e)
