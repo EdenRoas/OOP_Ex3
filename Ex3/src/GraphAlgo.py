@@ -1,15 +1,14 @@
 import json
 import math
-import random
 import sys
 from typing import List
+
+from pip._internal.cli.cmdoptions import src
+
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
 from src.GraphInterface import GraphInterface
-from Point3D import Point3D
 from queue import PriorityQueue
-# from GraphGUI import GraphGUI
-# import matplotlib.pyplot as plt
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -46,19 +45,6 @@ class GraphAlgo(GraphAlgoInterface):
         except Exception as e:
             print(e)
             return False
-
-    # def load_from_json(self, file_name: str) -> bool:
-    #     # try:
-    #     #     with open(file_name, "r") as infile:
-    #     #         graph_dict = json.load(infile)
-    #     #         for node in graph_dict["Nodes"]:
-    #     #             self.__graph.add_node(node.get_ID(), (node.get_location().x(), node.get_location().y(), node.get_location().z()))
-    #     #         for edge in graph_dict["Edges"]:
-    #     #             self.__graph.add_edge(edge["src"], edge["dest"], edge["w"])
-    #     #     return True
-    #     # return False
-    #
-    #     pass
 
     def save_to_json(self, file_name: str) -> bool:
         try:
@@ -169,4 +155,8 @@ class GraphAlgo(GraphAlgoInterface):
         return path, sum_weight
 
     def plot_graph(self) -> None:
-        pass
+        from src.GraphGUI import GraphGUI
+        graphd = GraphGUI(self)
+        graphd.run_gui()
+
+
