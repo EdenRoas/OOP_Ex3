@@ -7,9 +7,9 @@ class DiGraph(GraphInterface):
 
     def __init__(self):
         self._mc = 0
-        self._vertices_dict : {int : NodeData} = {}
-        self._src_edge_dict = {}
-        self._dest_edge_dict = {}
+        self._vertices_dict: {int: NodeData} = {}
+        self._src_edge_dict: dict = dict([])
+        self._dest_edge_dict: dict = dict([])
 
     def v_size(self) -> int:
         return len(self._vertices_dict)
@@ -24,10 +24,10 @@ class DiGraph(GraphInterface):
         return self._vertices_dict
 
     def all_in_edges_of_node(self, id1: int) -> dict:
-        return self._dest_edge_dict.get(id1)
+        return self._dest_edge_dict[id1]
 
     def all_out_edges_of_node(self, id1: int) -> dict:
-        return self._src_edge_dict.get(id1)
+        return self._src_edge_dict[id1]
 
     def get_mc(self) -> int:
         return self._mc
@@ -49,14 +49,14 @@ class DiGraph(GraphInterface):
         if id2 not in self._dest_edge_dict.keys():
             self._dest_edge_dict[id2] = {}
         self._dest_edge_dict[id2][id1] = weight
-        self._vertices_dict.get(id1).update_neighbors_list(self._vertices_dict.get(id2))
+        self._vertices_dict.get(id1).update_neighbors_list(id2)
         self._mc += 1
         return True
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
         if node_id in self._vertices_dict.keys():
             return False
-        if pos == None:
+        if pos is None:
             new_node = NodeData(node_id, Point3D(0, 0, 0))
         else:
             new_node = NodeData(node_id, Point3D(pos[0], pos[1], pos[2]))
@@ -75,7 +75,7 @@ class DiGraph(GraphInterface):
             del self._dest_edge_dict[e][node_id]
         del self._src_edge_dict[node_id]
         for e in self._dest_edge_dict[node_id]:
-            e.remove_from_neighbors_list(self._vertices_dict.get(node_id))
+            e.remove_from_neighbors_list(node_id)
         self._mc += 1
         return True
 
@@ -90,5 +90,12 @@ class DiGraph(GraphInterface):
             return False
         del self._src_edge_dict[node_id1][node_id2]
         del self._dest_edge_dict[node_id2][node_id1]
-        self._vertices_dict.get(node_id1).remove_from_neighbors_list(self._vertices_dict.get(node_id2))
+        self._vertices_dict.get(node_id1).remove_from_neighbors_list(node_id2)
+        self._mc += 1
         return True
+
+    def get_edge_weigth(self, src: int, dest: int) -> float:
+        return self._src_edge_dict[src][dest]
+
+    def get_all_src_dict(self) -> dict:
+        return self._src_edge_dict
