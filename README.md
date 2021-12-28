@@ -9,43 +9,31 @@ here are the classes of this data structure:
 
 | Class      | Description |
 | :------------| :------------|
-| Node_Data  | represents a vertices on the grap |
-| Edge_Data   |   represent an edge which connects two different vertices|
-| Geo_Location      |    represents a 3 coordinates point|
-| Directed_Weighted_Graph      |    represents an graph based on the vertices and edges |
-| Directed_Weighted_Graph_Algorithms      |    a data structure based on the DirectedWeightedGraph structrue that offers variuos algorithms | 
+| NodeData  | represents a vertices on the grap |
+| Point3D      |    represents a 3 coordinates point|
+| DiGraph      |    represents an graph based on the vertices and edges |
+| GraphAlgo      |    a data structure based on the DirectedWeightedGraph structrue that offers variuos algorithms | 
 
-## Node_Data
+## NodeData
 + Represents a vertice on the graph.
-   + **Key:** specific key associated with this node.
-   + **Tag:** contains an integer, helps with graph algorithms.
-   + **Weight:** the weight of the node.
-   + **Info:** a string associated with the node, helps with graph algorithms.
+   + **id:** specific key associated with this node.
    + **Location:** the location of the node in 3D.
-
-## Edge_Data
-+ Represent an edge which connects two different node.
-    + **Src:** source node.
-    + **Dest:** destination node.
-    + **Tag:** contains an integer, helps with graph algorithms.
-    + **Info:** a string associated with the edge, helps with graph algorithms.
-    + **Weight:** the weight of the edge from source to destination.
     
-## Geo_Location
+## Point3D
 + Represents a location in 3D.
   + **X:** x value.
   + **Y:** y value.
   + **Z:** z value.
 
-## Directed_Weighted_Graph
+## DiGraph
 + Represents an graph based on the nodes and edges.
-  + **NodeMap:** an HashMap contains all the vertices of the graph.
-  + **EdgeMap:** an HashMap contains all the edges of the graph.
-  + **MC:** counts the changes in the graph.
-  + **edgeSize:** the amount of edges.
-  + **nodeSize:** the amount of nodes.
+  + **_vertices_dict:** a dictionary contains all the vertices of the graph.
+  + **_src_edge_dict:** a nested dictionary containing the edges of the graph according to the scource vertax.
+  + **_dest_edge_dict:** a nested dictionary containing the edges of the graph according to the destination vertax.
+  + **_mc:** counts the changes in the graph.
+  + **edges_size:** the amount of edges.
 
-## Directed_Weighted_Graph_Algorithms
+## GraphAlgo
 + The class that contains the whole algorithms that can be used on a graph.
      + **graph:** the graph that the algorithms being used on. 
 
