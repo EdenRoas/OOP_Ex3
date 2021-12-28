@@ -10,15 +10,13 @@ class DiGraph(GraphInterface):
         self._vertices_dict: {int: NodeData} = {}
         self._src_edge_dict: dict = dict([])
         self._dest_edge_dict: dict = dict([])
+        self.edges_size = 0
 
     def v_size(self) -> int:
         return len(self._vertices_dict)
 
     def e_size(self) -> int:
-        sum_of_edges = 0
-        for e in self._src_edge_dict:
-            sum_of_edges += len(e)
-        return sum_of_edges
+        return self.edges_size
 
     def get_all_v(self) -> dict:
         return self._vertices_dict
@@ -51,6 +49,7 @@ class DiGraph(GraphInterface):
         self._dest_edge_dict[id2][id1] = weight
         self._vertices_dict.get(id1).update_neighbors_list(id2)
         self._mc += 1
+        self.edges_size += 1
         return True
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
