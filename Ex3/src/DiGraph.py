@@ -54,6 +54,7 @@ class DiGraph(GraphInterface):
         self._vertices_dict.get(id1).update_neighbors_list(id2)
         self._mc += 1
         self.edges_size += 1
+        self._vertices_dict[id2].update_number_of_edges_in("+")
         return True
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
@@ -80,6 +81,7 @@ class DiGraph(GraphInterface):
         if node_id in self._src_edge_dict.keys():
             for e in self._src_edge_dict[node_id]:
                 del self._dest_edge_dict[e][node_id]
+                self._vertices_dict[e].update_number_of_edges_in("-")
                 self.edges_size -= 1
             del self._src_edge_dict[node_id]
         self._mc += 1
@@ -97,6 +99,7 @@ class DiGraph(GraphInterface):
         del self._src_edge_dict[node_id1][node_id2]
         del self._dest_edge_dict[node_id2][node_id1]
         self._vertices_dict.get(node_id1).remove_from_neighbors_list(node_id2)
+        self._vertices_dict[node_id2].update_number_of_edges_in("-")
         self.edges_size -= 1
         self._mc += 1
         return True
@@ -106,3 +109,6 @@ class DiGraph(GraphInterface):
 
     def get_all_src_dict(self) -> dict:
         return self._src_edge_dict
+
+    def __repr__(self):
+        return "Graph: |V|={}, |E|={}".format(self.v_size(), self.e_size())

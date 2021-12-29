@@ -64,7 +64,6 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             json_object = json.dumps(dictionary, indent=4)
             with open(file_name, 'w') as outfile:  # Open a file for writing
-                # json.dump(dictionary, outfile)
                 outfile.write(json_object)
                 return True
         except Exception as e:
@@ -72,7 +71,6 @@ class GraphAlgo(GraphAlgoInterface):
             return False
 
     def Dijkstra(self, src) -> (list[int], list[int]):
-        # nodes_set = self.__graph.get_all_v()
         dist = {src: 0}
         for node in self.__graph.get_all_v().keys():
             if node == src:
@@ -82,12 +80,9 @@ class GraphAlgo(GraphAlgoInterface):
         for node in self.__graph.get_all_v().keys():
             parantMap[node] = None
         heap_queue = PriorityQueue()
-        # nq = NodeQueue(0, src)
         heap_queue.put((0, src))
-        # print(heap_queue.__repr__())
         while not heap_queue.empty():
             v = heap_queue.get()
-            # print(heap_queue.__repr__())
             if v[1] not in self.__graph.get_all_src_dict():
                 break
             for neighbor in self.__graph.all_out_edges_of_node(v[1]).keys():
@@ -96,7 +91,6 @@ class GraphAlgo(GraphAlgoInterface):
                 if new_dist < old_dist:
                     dist[neighbor] = new_dist
                     parantMap[neighbor] = v[1]
-                    # nq = NodeQueue(new_dist, neighbor.get_ID())
                     heap_queue.put((new_dist, neighbor))
         return parantMap, dist
 
@@ -171,8 +165,56 @@ class GraphAlgo(GraphAlgoInterface):
         return path, sum_weight
 
     def plot_graph(self) -> None:
-        from src.GraphGUI import GraphGUI
-        graphd = GraphGUI(self)
-        graphd.run_gui()
+        import networkx as nx
+        import matplotlib.pyplot as plt
+        fig = plt.figure(figsize=(9, 6))
+        ax = fig.add_subplot()
+        ax.set_title('Graph Show')
+        ax.set_ylabel('Y')
+        ax.set_xlabel('X')
+        x_lable = []
+        y_lable = []
+        G = nx.DiGraph()
+        for src in self.__graph.get_all_src_dict().keys():
+            for dest in self.__graph.get_all_src_dict()[src]:
+                G.add_edges_from([(src, dest)], weight=self.__graph.get_all_src_dict()[src][dest])
+        initialpos = {}
+        for node in self.__graph.get_all_v().values():
+            x = node.get_location().get_x()
+            x_lable.append(x)
+            y = node.get_location().get_y()
+            y_lable.append(y)
+            initialpos[node.get_ID()] = (x, y)
+        node_list = initialpos.keys()
+        isPosExists = True
+        for pos in initialpos.values():
+            if pos == (0, 0):
+                isPosExists = False
+        if isPosExists:
+            ax.set_xlim([self._find_min_x_or_y(x_lable), self._find_max_x_or_y(x_lable)])
+            ax.set_ylim([self._find_min_x_or_y(y_lable), self._find_max_x_or_y(y_lable)])
+            pos = nx.spring_layout(G, pos=initialpos, fixed=node_list)
+        else:
+            pos = nx.spring_layout(G)
+        nx.draw_networkx_nodes(G, pos, node_size=100)
+        nx.draw_networkx_edges(G, pos, edgelist=G.edges(), edge_color='black')
+        nx.draw_networkx_labels(G, pos, font_color='black', font_size=5)
+        plt.show()
+
+    def _find_min_x_or_y(self, val_lable: list) -> float:
+        min_val = sys.maxsize
+        for val in val_lable:
+            if val < min_val:
+                min_val = val
+        return (min_val-0.00025)
+
+    def _find_max_x_or_y(self, val_lable: list) -> float:
+        max_val = -sys.maxsize - 1
+        for val in val_lable:
+            if val > max_val:
+                max_val = val
+        return (max_val+0.00025)
+
+
 
 
