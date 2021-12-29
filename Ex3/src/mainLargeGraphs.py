@@ -46,18 +46,18 @@ def check1000():
     print(g_algo.TSP([1, 2, 3]))
     end = time.time()
     print("the time it took for the function TSP to run is: {} sec.".format(end - begin))
-    begin = time.time()
-    print(g_algo.centerPoint())
-    end = time.time()
-    print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
-    # g_algo.plot_graph()
+    # begin = time.time()
+    # print(g_algo.centerPoint())
+    # end = time.time()
+    # print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
+    g_algo.plot_graph()
 
 def check10000():
     """ This function tests the naming, basic testing over 10000Nodes json file.
       :return:
       """
     g_algo = GraphAlgo()
-    file = 'C:\\Users\hadar\PycharmProjects\Ex3\data\10000Nodes.json'
+    file = 'C:\\Users\hadar\PycharmProjects\Ex3\data\\10000Nodes.json'
     begin = time.time()
     g_algo.load_from_json(file)
     end = time.time()
@@ -90,18 +90,18 @@ def check10000():
     print(g_algo.TSP([1, 2, 3]))
     end = time.time()
     print("the time it took for the function TSP to run is: {} sec.".format(end - begin))
-    begin = time.time()
-    print(g_algo.centerPoint())
-    end = time.time()
-    print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
-    g_algo.plot_graph()
+    # begin = time.time()
+    # print(g_algo.centerPoint())
+    # end = time.time()
+    # print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
+    # g_algo.plot_graph()
 
 def check100000():
     """ This function tests the naming, basic testing over 100000Nodes json file.
       :return:
       """
     g_algo = GraphAlgo()
-    file = 'C:\\Users\hadar\PycharmProjects\Ex3\data\100000.json'
+    file = 'C:\\Users\hadar\PycharmProjects\Ex3\data\\100000.json'
     begin = time.time()
     g_algo.load_from_json(file)
     end = time.time()
@@ -134,11 +134,11 @@ def check100000():
     print(g_algo.TSP([1, 2, 3]))
     end = time.time()
     print("the time it took for the function TSP to run is: {} sec.".format(end - begin))
-    begin = time.time()
-    print(g_algo.centerPoint())
-    end = time.time()
-    print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
-    g_algo.plot_graph()
+    # begin = time.time()
+    # print(g_algo.centerPoint())
+    # end = time.time()
+    # print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
+    # g_algo.plot_graph()
 
 if __name__ == '__main__':
     check()

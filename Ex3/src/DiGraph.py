@@ -110,5 +110,11 @@ class DiGraph(GraphInterface):
     def get_all_src_dict(self) -> dict:
         return self._src_edge_dict
 
+    def is_edge_excics(self, src, dest):
+        if src in self._src_edge_dict.keys():
+            if dest in self._src_edge_dict[src].keys():
+                return True
+        return False
+
     def __repr__(self):
         return "Graph: |V|={}, |E|={}".format(self.v_size(), self.e_size())
