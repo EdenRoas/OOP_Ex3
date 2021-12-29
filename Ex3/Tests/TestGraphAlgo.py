@@ -65,7 +65,29 @@ class TestGraphAlgo(TestCase):
         self.assertEqual((0, [2]), self.g_algo.shortest_path(2, 2))
 
     def test_tsp(self):
-        self.fail()
+        graph = DiGraph()
+        graph.add_node(0, (1, 1, 1))
+        graph.add_node(1, (2, 2, 2))
+        graph.add_node(2, (3, 3, 3))
+        graph.add_edge(0, 1, 1)
+        graph.add_edge(1, 2, 3)
+        graph.add_edge(2, 0, 10)
+        ag = GraphAlgo(graph)
+        lst = [0, 1, 2]
+        self.assertEqual(([0, 1, 2], 4), ag.TSP(lst))
+        graph2 = DiGraph()
+        graph2.add_node(0, (1, 1, 1))
+        graph2.add_node(1, (2, 2, 2))
+        graph2.add_node(2, (3, 3, 3))
+        graph2.add_edge(0, 1, 1)
+        graph2.add_edge(1, 2, 3)
+        graph2.add_edge(2, 0, 10)
+        graph2.add_edge(0, 2, 0.5)
+        graph2.add_edge(2, 1, 1)
+        algo = GraphAlgo(graph2)
+        lst = [0, 1, 2]
+        self.assertTrue(1.5 <= algo.TSP(lst)[1] <= 4)
+        self.assertTrue(set(lst).issubset(set(algo.TSP(lst)[0])))
 
     def test_center_point(self):
         self.assertEqual((None, math.inf), self.g_algo.centerPoint())
@@ -88,6 +110,9 @@ class TestGraphAlgo(TestCase):
         graph2.add_edge(3, 0, 0.1)
         alg2 = GraphAlgo(graph2)
         self.assertEqual((3, 1.1), alg2.centerPoint())
+        alg1 = GraphAlgo()
+        alg1.load_from_json("C:\\Users\hadar\PycharmProjects\Ex3\data\A0.json")
+        self.assertEqual((7, 6.806805834715163), alg1.centerPoint())
 
 
 
