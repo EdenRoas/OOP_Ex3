@@ -20,6 +20,10 @@ class TestNodeData(TestCase):
     n1 = NodeData(id1, loc1)
     n2 = NodeData(id2, loc2)
     n3 = NodeData(id3, loc3)
+    neighbor1 = [1, 4, 6]
+    neighbor2 = [2, 3, 5]
+    neighbor3 = [1, 4, 3]
+
 
     def test_get_id(self):
         self.assertEqual(self.id1, self.n1.get_ID())
@@ -32,10 +36,52 @@ class TestNodeData(TestCase):
         self.assertEqual(self.loc3.__dict__, self.n3.get_location().__dict__)
 
     def test_update_neighbors_list(self):
-        self.fail()
+        self.n1.update_neighbors_list(1)
+        self.n1.update_neighbors_list(4)
+        self.n1.update_neighbors_list(6)
+        self.n2.update_neighbors_list(2)
+        self.n2.update_neighbors_list(3)
+        self.n2.update_neighbors_list(5)
+        self.n3.update_neighbors_list(1)
+        self.n3.update_neighbors_list(4)
+        self.n3.update_neighbors_list(3)
+        self.assertEqual(self.neighbor1, self.n1.get_neighbors_list())
+        self.assertEqual(self.neighbor2, self.n2.get_neighbors_list())
+        self.assertEqual(self.neighbor3, self.n3.get_neighbors_list())
 
     def test_remove_from_neighbors_list(self):
-        self.fail()
+        self.n1.update_neighbors_list(1)
+        self.n1.update_neighbors_list(4)
+        self.n1.update_neighbors_list(6)
+        self.n2.update_neighbors_list(2)
+        self.n2.update_neighbors_list(3)
+        self.n2.update_neighbors_list(5)
+        self.n3.update_neighbors_list(1)
+        self.n3.update_neighbors_list(4)
+        self.n3.update_neighbors_list(3)
+
+        self.n1.remove_from_neighbors_list(1)
+        self.n2.remove_from_neighbors_list(5)
+        self.n3.remove_from_neighbors_list(3)
+        ne1 = [4, 6]
+        ne2 = [2, 3]
+        ne3 = [1, 4]
+        self.assertEqual(ne1, self.n1.get_neighbors_list())
+        self.assertEqual(ne2, self.n2.get_neighbors_list())
+        self.assertEqual(ne3, self.n3.get_neighbors_list())
 
     def test_get_neighbors_list(self):
-        self.fail()
+        self.n1.update_neighbors_list(1)
+        self.n1.update_neighbors_list(4)
+        self.n1.update_neighbors_list(6)
+        self.n2.update_neighbors_list(2)
+        self.n2.update_neighbors_list(3)
+        self.n2.update_neighbors_list(5)
+        self.n3.update_neighbors_list(1)
+        self.n3.update_neighbors_list(4)
+        self.n3.update_neighbors_list(3)
+        self.assertEqual(self.neighbor1, self.n1.get_neighbors_list())
+        self.assertEqual(self.neighbor2, self.n2.get_neighbors_list())
+        self.assertEqual(self.neighbor3, self.n3.get_neighbors_list())
+
+

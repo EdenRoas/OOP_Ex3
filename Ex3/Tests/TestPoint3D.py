@@ -31,12 +31,12 @@ class TestPoint3D(TestCase):
         self.assertEqual(self.point3.get_z(), self.z)
 
     def test_distance(self):
-        dist1 = 0.00159
-        dist2 = 0.005697
-        dist3 = 0.00637
+        dist1 = 0.0015903362251637298
+        dist2 = 0.005697320618069602
+        dist3 = 0.006367047671004182
         dist4 = 0.0
-        # self.assertAlmostEqual(dist1, self.point1.distance(self.point2))
-        # self.assertEqual(dist3, self.point2.distance(self.point3))
-        # self.assertEqual(dist4, self.point3.distance(self.point3))
-        # self.assertEqual(dist2, self.point3.distance(self.point1))
+        self.assertEqual(dist1, self.point1.distance(self.point2))
+        self.assertEqual(dist3, self.point2.distance(self.point3))
+        self.assertEqual(dist4, self.point3.distance(self.point3))
+        self.assertEqual(dist2, self.point3.distance(self.point1))
 
