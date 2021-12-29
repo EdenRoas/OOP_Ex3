@@ -1,6 +1,7 @@
 import json
 import math
 import sys
+import time
 from typing import List
 
 from pip._internal.cli.cmdoptions import src
@@ -27,6 +28,7 @@ class GraphAlgo(GraphAlgoInterface):
         return self.__graph
 
     def load_from_json(self, file_name: str) -> bool:
+        begin = time.time()
         try:
             with open(file_name, 'r') as f:  # Open a file for reading
                 Jsonfile = json.load(f)
@@ -37,16 +39,20 @@ class GraphAlgo(GraphAlgoInterface):
                     graph.add_node(node['id'], pos)
                 else:
                     graph.add_node(node['id'])
-
             for edge in Jsonfile["Edges"]:
                 graph.add_edge(edge["src"], edge["dest"], edge["w"])
             self.__graph = graph
+            end = time.time()
+            print("the time it took for the function load_from_json to run is: {} sec.".format(end - begin))
             return True
         except Exception as e:
             print(e)
+            end = time.time()
+            print("the time it took for the function load_from_json to run is: {} sec.".format(end - begin))
             return False
 
     def save_to_json(self, file_name: str) -> bool:
+        begin = time.time()
         dictionary = {}
         dictionary["Edges"] = []
         for src in self.__graph.get_all_src_dict().keys():
@@ -65,9 +71,13 @@ class GraphAlgo(GraphAlgoInterface):
             json_object = json.dumps(dictionary, indent=4)
             with open(file_name, 'w') as outfile:  # Open a file for writing
                 outfile.write(json_object)
+                end = time.time()
+                print("the time it took for the function save_to_json to run is: {} sec.".format(end - begin))
                 return True
         except Exception as e:
             print(e)
+            end = time.time()
+            print("the time it took for the function save_to_json to run is: {} sec.".format(end - begin))
             return False
 
     def Dijkstra(self, src) -> (list[int], list[int]):
@@ -95,12 +105,19 @@ class GraphAlgo(GraphAlgoInterface):
         return parantMap, dist
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
+        begin = time.time()
         if id1 not in self.__graph.get_all_v() or id2 not in self.__graph.get_all_v():
+            end = time.time()
+            print("the time it took for the function shortest_path to run is: {} sec.".format(end - begin))
             return math.inf, []
         if id1 is id2:
+            end = time.time()
+            print("the time it took for the function shortest_path to run is: {} sec.".format(end - begin))
             return 0, [id1]
         parent, shortest_path_dist = self.Dijkstra(id1)
         if shortest_path_dist[id2] == math.inf:
+            end = time.time()
+            print("the time it took for the function shortest_path to run is: {} sec.".format(end - begin))
             return math.inf, []
         path = []
         if id2 in parent:
@@ -108,10 +125,15 @@ class GraphAlgo(GraphAlgoInterface):
             while v is not None:
                 path.append(v)
                 v = parent[v]
+        end = time.time()
+        print("the time it took for the function shortest_path to run is: {} sec.".format(end - begin))
         return shortest_path_dist[id2], path[::-1]
 
     def centerPoint(self) -> (int, float):
+        begin = time.time()
         if not self.isConnected():
+            end = time.time()
+            print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
             return None, math.inf
         min_dist = sys.maxsize
         index_of_center = -1
@@ -120,6 +142,8 @@ class GraphAlgo(GraphAlgoInterface):
             if tmp_dist < min_dist:
                 min_dist = tmp_dist
                 index_of_center = node
+        end = time.time()
+        print("the time it took for the function centerPoint to run is: {} sec.".format(end - begin))
         return index_of_center, min_dist
 
     def _find_max_dist(self, cuur) -> float:
@@ -148,6 +172,7 @@ class GraphAlgo(GraphAlgoInterface):
                 self.DFS(node, visited)
 
     def TSP(self, node_lst: List[int]) -> (List[int], float):
+        begin = time.time()
         sum_weight = 0
         path = []
         if len(node_lst) > 0:
@@ -161,7 +186,11 @@ class GraphAlgo(GraphAlgoInterface):
                 for p in way[1:]:
                     path.append(p)
         if sum_weight == math.inf:
+            end = time.time()
+            print("the time it took for the function TSP to run is: {} sec.".format(end - begin))
             return [], math.inf
+        end = time.time()
+        print("the time it took for the function TSP to run is: {} sec.".format(end - begin))
         return path, sum_weight
 
     def plot_graph(self) -> None:
